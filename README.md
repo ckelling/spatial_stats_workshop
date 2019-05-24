@@ -2,6 +2,9 @@
 Through this repository, I've developed a workshop in Spatial Statistics for the BIGSSS Computational Social Science Summer School and Research Incubator. 
 
 Files:
+* BIGSSS_Spatial_Statistics_Workshop.pdf: This presentation gives a general overview of spatial statistics. There are brief explanations of areal unit and point process models, projections, geocoding, and spatial data analysis in R. This presentation was developed through a combination of the resources below, with parts drawn from my own research, Dr. Shaby's Introduction to Spatial Statistics lectures, and Dr. Schutte's introduction to Spatial Event Data Analysis.
+* bigsss_preliminaries.R: This file demonstrates some basic spatial data analysis and spatial statistics models in R. We load spatial data (polygons and points) and demonstrate some basic areal unit and point process models. 
+* data/: This folder contains all data used for the workshop.
 
 
 # References
