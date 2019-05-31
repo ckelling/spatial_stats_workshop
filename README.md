@@ -3,8 +3,10 @@ Through this repository, I've developed a workshop in Spatial Statistics for the
 
 Files:
 * BIGSSS_Spatial_Statistics_Workshop.pdf: This presentation gives a general overview of spatial statistics. There are brief explanations of areal unit and point process models, projections, geocoding, and spatial data analysis in R. This presentation was developed through a combination of the resources below, with parts drawn from my own research, Dr. Shaby's Introduction to Spatial Statistics lectures, and Dr. Schutte's introduction to Spatial Event Data Analysis.
-* bigsss_preliminaries.R: This file demonstrates some basic spatial data analysis and spatial statistics models in R. We load spatial data (polygons and points) and demonstrate some basic areal unit and point process models. 
+* src/bigsss_preliminaries.R: This file demonstrates some basic spatial data analysis and spatial statistics models in R. We load spatial data (polygons and points) and demonstrate some basic areal unit and point process models. We use crime data and Detroit, Michigan as our examples in this code.
 * data/: This folder contains all data used for the workshop.
+  * data/det_bg.Rdata: This is the shape file for Detroit block groups (Source: US Census). 
+  * data/detroit_data.Rdata: This is the event file for Detroit (Source: Police Data Initiative).
 
 
 # References
