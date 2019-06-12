@@ -3,7 +3,7 @@
 ### BIGSSS Computational Social Science Summer School on Migration
 ###
 ### Created:      05/24/19
-### Last Updated: 05/30/19
+### Last Updated: 06/12/19
 ###
 
 # Start clean
@@ -11,6 +11,7 @@ rm(list = ls())
 
 # Packages
 #use install.packages("package_name") if you do not have the package installed
+#install.packages("maptools") #for example
 library(maptools)
 library(sp)
 library(rgdal)
@@ -70,7 +71,7 @@ det_bg <- spTransform(det_bg, proj4string(data.sp))
 overlap_set <- over(data.sp, det_bg)
 nrow(data.sp)
 nrow(overlap_set) #it has classified each of the points in the dataset into a block group
-sum(is.na(overlap_set$STATEFP)) #there are 466ish events that actually occur outside of city boundaries
+sum(is.na(overlap_set$STATEFP)) #there are some events that actually occur outside of city boundaries
 
 detroit_df <- as.data.frame(data.sp)
 det_dat_over <- cbind(detroit_df, overlap_set)
@@ -102,7 +103,7 @@ rm(count_by_bg, sp_f, overlap_set, detroit_df, det_dat_over, det_dat_ov, agg_dat
 ### 4.) Areal Unit modeling
 ###
 
-length(which(is.na(det_bg@data$freq))) #8 block groups with no crime
+length(which(is.na(det_bg@data$freq))) #some block groups with no crime
 det_bg$freq[which(is.na(det_bg@data$freq))] <- 0 #replace with 0, instead of NA
 
 #Create neighborhood matrix from shape file
@@ -110,7 +111,7 @@ det_bg$freq[which(is.na(det_bg@data$freq))] <- 0 #replace with 0, instead of NA
 W.nb <- poly2nb(det_bg, row.names = rownames(det_bg@data)) 
 W.list <- nb2listw(W.nb, style="B")
 W.mat <- nb2mat(W.nb, style="B")
-View(head(W.mat))
+View(head(W.mat[,1:10], n =10))
 
 #Plot neighborhood matrix
 coords <- coordinates(det_bg)
@@ -126,11 +127,13 @@ moran.mc(x=resid.model, listw=W.list, nsim=5000)
 
 #Fit model using neighborhood matrix
 #rownames(W.mat) <- NULL #need this for test if matrix is symmetric
+# Takes a couple of minutes to run
+# *** Should increase n.sample and burnin when running for your data***
 model.bym <- S.CARbym(formula=form, data=det_bg@data,
-                           family="poisson", W=W.mat, burnin=20000, n.sample=150000, thin=10)
+                           family="poisson", W=W.mat, burnin=2000, n.sample=5000, thin=10)
 summary(model.bym)
 model.bym$modelfit
-model.bym$summary.results[,1:3]
+model.bym$summary.results[,1:3] #should consider standardization of variables
 
 rm(W.list, W.mat, W.nb, model, coords, form, resid.model, model.bym)
 
@@ -154,7 +157,9 @@ event_ppp <- as.ppp(xyzt, bg_owin) #some lie outside of the specified window
 #k_sim <- envelope(event_ppp, fun = Kest, global = FALSE, nrank = 20, nsim = 800)
 
 #F test using ECDF's
-f_sim <- envelope(event_ppp, fun = Fest, global = FALSE, nrank = 20, nsim = 800)
+# *** Should use a larger "nsim" when using on your data ***
+# Takes a couple of minutes to run
+f_sim <- envelope(event_ppp, fun = Fest, global = FALSE, nrank = 20, nsim = 100)
 plot(f_sim, main = "F function Envelope, Pointwise", ylab = "F function") 
 
 
