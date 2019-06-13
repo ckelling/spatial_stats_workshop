@@ -23,7 +23,7 @@ library(CARBayes)
 
 # Set working directory to bigsss_spatial_stats folder path
 #     Note: directories have to include "/" not "\"
-setwd("C:/Users/ckell/Desktop/Google Drive/01_Penn State/Conference Work/BIGSSS CSSS 2019/spatial_stats_workshop")
+setwd("/spatial_stats_workshop")
 
 ###
 ### 1.) Load spatial polygon data data (Source: US Census)
