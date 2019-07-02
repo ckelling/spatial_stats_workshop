@@ -23,7 +23,7 @@ library(CARBayes)
 
 # Set working directory to bigsss_spatial_stats folder path
 #     Note: directories have to include "/" not "\"
-setwd("/spatial_stats_workshop")
+setwd("~/spatial_stats_workshop")
 
 ###
 ### 1.) Load spatial polygon data data (Source: US Census)
@@ -94,7 +94,7 @@ sp_f <- left_join(sp_f, det_bg@data)
 count_by_bg <- ggplot() + geom_polygon(data = sp_f, aes(long, lat, group = group, fill = freq)) + coord_equal() +
   labs(fill = "No. of \nEvents")+ geom_polygon(data=sp_f,aes(long,lat, group = group), 
                                                fill = NA, col = "black") +
-  ggtitle("Number of Evemts per Block Group")+ scale_fill_gradient(low = "lightblue", high = "navyblue")
+  ggtitle("Number of Events per Block Group")+ scale_fill_gradient(low = "lightblue", high = "navyblue")
 count_by_bg
 
 rm(count_by_bg, sp_f, overlap_set, detroit_df, det_dat_over, det_dat_ov, agg_dat, num_per_bg, GEOID)
